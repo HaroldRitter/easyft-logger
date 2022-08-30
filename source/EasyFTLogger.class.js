@@ -241,6 +241,7 @@ Object.assign(EasyFTLogger.prototype,
 	{
 		var slen = 26, prefix = bg ? "bg:" : "c:",
 			id = prefix.length, styles = this.styles,
+			self = this,
 			names = Object.getOwnPropertyNames(styles);
 			
 		// Fixes the max length
@@ -273,7 +274,7 @@ Object.assign(EasyFTLogger.prototype,
 							type = type || "";
 							return type + color + " | " + type + c2;
 						});
-						this.log("%{" + style + "}%s%{0}%s%s",
+						self.log("%{" + style + "}%s%{0}%s%s",
 							styleStr,
 							" ".repeat(slen - styleStr.length),
 							styles[style]);
