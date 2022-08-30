@@ -8,6 +8,7 @@ const EasyFTLogger = require("./source/EasyFTLogger.class.js");
 
 require("./source/extensions/special-characters.ext.js");
 require("./source/extensions/text-styles.ext.js");
+require("./source/extensions/defined-colors.ext.js");
 
 // ----- Exports EasyFTLogger ----- //
 
