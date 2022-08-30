@@ -46,6 +46,9 @@ logger.log("%{bold}%s%{} %s %{italic; orange}%s%{} %s",
 
 > **Today** is a <i style="color: #ff7f00;">sunny</i> day!
 
+*The specified colors (that use HTML) in the documentation 
+are not displayed in **npm** or **github***
+
 ## Log
 
 The log functions formats the message to replace *Easy FT*
@@ -137,7 +140,10 @@ the default styles:
 
 *Easy FT Logger* uses RGB values to define the default colors.
 The result depends on the shell and it may diverge from the display
-of the documentation.
+of the documentation. (*The specified colors - that use HTML -
+in the  documentation are not displayed in **npm** or **github***).
+However you can use the static or instance ``printColors``
+method to see the colors.
 
 #### Styles: Defined Colors - Background and Text:
 
@@ -162,6 +168,9 @@ For example:
 
 Output:
 > <span style="color: #ff0; background-color: #f00;">I have no idea what the yellow on red refers to.</span>
+
+*The specified colors (that use HTML) in the documentation 
+are not displayed in **npm** or **github***
 
 #### Styles: Defined Colors - Light and Dark:
 
@@ -190,6 +199,12 @@ As a summary, here is the list of red colors:
 
 Here is the list of all the default colors offered by *Easy FT Logger*
 which contains two synonyms: *grey* = *gray* and *magenta* = *pink*.
+
+*The specified colors (that use HTML) in the documentation 
+are not displayed in **npm** or **github***
+
+*Using ``EasyFTLogger.printColor()`` displays the colors as seen
+in the shell.*
 
 - <span style="color: rgb(255, 255, 255); background: #111;">lightwhite = white</span>
 - <span style="color: rgb(213, 213, 213); background: #111;">darkwhite</span>
