@@ -1,6 +1,6 @@
 {
   "name": "easyft-logger",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A simple JavaScript console logger that offers an intelligible syntax as a substitute for the ANSI escape code.",
   "main": "index.js",
   "scripts": {
