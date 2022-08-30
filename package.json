@@ -1,0 +1,25 @@
+{
+  "name": "easyft-logger",
+  "version": "0.0.0",
+  "description": "A simple JavaScript console logger that offers an intelligible syntax as a substitute for the ANSI escape code.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HaroldRitter/easyft-logger.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "node.js",
+    "log",
+    "ANSI"
+  ],
+  "author": "Harold Ritter <harold.ritter@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HaroldRitter/easyft-logger/issues"
+  },
+  "homepage": "https://github.com/HaroldRitter/easyft-logger#readme"
+}
