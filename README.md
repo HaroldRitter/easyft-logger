@@ -79,7 +79,8 @@ By default, there is only one special character:
 
 | Name | Special character | Example |
 | --- | --- | --- |
-| ``%{`` | ``%%{`` | ``"{%{}red}"`` -> ``"%%{red}"`` |
+| ``%{`` | ``%{`` | ``"{%{}red}"`` -> ``"%{red}"`` |
+| ``%`` | ``%`` | ``"{%}{red}"`` -> ``"%{red}"`` |
 
 ## Styles
 
@@ -375,7 +376,8 @@ with the ``EasyFTLogger.orphanLogger`` static method.
 | --- | --- | --- |
 | *Easy FT* statement | ``%{<code>}`` |
 | Special characters statement | ``%{<char>}`` | ``%{%{}`` |
-| Writing ``%%{`` | ``%{%{}`` |
+| Writing ``%{`` | ``%{%{}`` |
+| Writing ``%`` | ``%{%}`` |
 | Style statement | ``%{<style>[;<style>]*}`` | ``%{bold; italic; red}`` |
 | Reseting the style | ``%{}`` or ``%{0}`` or ``%{r}`` or ``%{reset}``
 | ANSI Escape Code | ``%{<number>}`` | ``%{38;5;25}``

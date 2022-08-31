@@ -10,5 +10,6 @@ const EasyFTLogger = require("../EasyFTLogger.class.js");
 
 Object.assign(EasyFTLogger.specials,
 {
-	"%{":	"%%{"
+	"%{":	"%{",
+	"%":	"%"
 });
