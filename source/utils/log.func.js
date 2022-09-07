@@ -10,8 +10,8 @@ module.exports =
 	{
 		return function()
 		{
-			var output = this.$preformat(arguments);
-			console[funcName].apply(console, output.messageAndArguments);
+			var output = this.preformat(...arguments);
+			console[funcName](...output.messageAndArguments);
 			return this;
 		};
 	},
@@ -20,8 +20,8 @@ module.exports =
 	{
 		return function(args)
 		{
-			var output = this.$preformat(args);
-			console[funcName].apply(console, output.messageAndArguments);
+			var output = this.preformat(...args);
+			console[funcName](...output.messageAndArguments);
 			return this;
 		};
 	}

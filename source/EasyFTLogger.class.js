@@ -300,13 +300,11 @@ class EasyFTLogger
 							var result;
 							const conv = this.#converters.find(conv =>
 							{
-								conv.regExp.lastIndex = 0;
-								result = conv.regExp.exec(code);
-								return result ? true : false;
+								return (result = conv.parse(code));
 							});
 							if(conv)
 							{
-								result = conv.convert.apply(conv, result);
+								result = conv.convert(...result);
 								out += (out ? ";" : "") + result;
 							}
 						}
@@ -321,7 +319,7 @@ class EasyFTLogger
 
 	$preformat(args)
 	{
-		return this.preformat.apply(this, args);
+		return this.preformat(...args);
 	}
 
 	// (name: string, regExp: RegExp, convert: Function(regRes, arg1, ...))
@@ -380,22 +378,26 @@ Object.assign(EasyFTLogger.prototype,
 {
 	// A substitute to the console.log function with the same arguments
 	log: 	logUtil.logFunction("log"),
-	// A substitute to the console.log function with all arguments in a single array
+	// [Deprecated] A substitute to the console.log function
+	// with all arguments in a single array
 	$log: 	logUtil.$logFunction("log"),
 	
 	// A substitute to the console.info function with the same arguments
 	info: 	logUtil.logFunction("info"),
-	// A substitute to the console.info function with all arguments in a single array
+	// [Deprecated] A substitute to the console.info function
+	// with all arguments in a single array
 	$info: 	logUtil.$logFunction("info"),
 	
 	// A substitute to the console.warn function with the same arguments
 	warn: 	logUtil.logFunction("warn"),
-	// A substitute to the console.warn function with all arguments in a single array
+	// [Deprecated] A substitute to the console.warn function
+	// with all arguments in a single array
 	$warn: 	logUtil.$logFunction("warn"),
 	
 	// A substitute to the console.error function with the same arguments
 	error: 	logUtil.logFunction("error"),
-	// A substitute to the console.error function with all arguments in a single array
+	// [Deprecated] A substitute to the console.error function
+	// with all arguments in a single array
 	$error: logUtil.$logFunction("error"),
 });
 
