@@ -43,7 +43,7 @@ class EasyFTLogger
 									name, light, normal, dark);
 		
 		// Adds the color to all existing instances
-		EasyFTLogger.loggers.forEach(function(logger)
+		EasyFTLogger.loggers.forEach(logger =>
 		{
 			try{logger.addColor(name, light, normal, dark);}
 			catch(e){}
@@ -80,7 +80,7 @@ class EasyFTLogger
 									name, regExp, convert);
 		
 		// Adds the converter to all existing instances
-		EasyFTLogger.loggers.forEach(function(logger)
+		EasyFTLogger.loggers.forEach(logger =>
 		{
 			try{logger.addConverter(name, regExp, convert);}
 			catch(e){}
@@ -153,14 +153,12 @@ class EasyFTLogger
 	*/
 	addColor(name, light, normal, dark)
 	{
-		var self = this;
-
 		// Many names (does not manage feedback loops)
 		if(name instanceof Array)
 		{
-			name.forEach(function(name)
+			name.forEach(name =>
 			{
-				self.addColor(name, light, normal, dark);
+				this.addColor(name, light, normal, dark);
 			});
 			return this;
 		}
@@ -190,7 +188,7 @@ class EasyFTLogger
 		}
 
 		// Creates the color and the background color
-		[["", false], ["c:", false], ["bg:", true]].forEach(function(data)
+		[["", false], ["c:", false], ["bg:", true]].forEach(data =>
 		{
 			var s = data[0], bg = data[1];
 			if(light !== undefined && light !== null)
@@ -220,11 +218,10 @@ class EasyFTLogger
 	{
 		var slen = 26, prefix = bg ? "bg:" : "c:",
 			id = prefix.length, styles = this.styles,
-			self = this,
 			names = Object.getOwnPropertyNames(styles);
 			
 		// Fixes the max length
-		names.forEach(function(style)
+		names.forEach(style =>
 		{
 			if(style.indexOf(prefix) === 0)
 			{
@@ -237,7 +234,7 @@ class EasyFTLogger
 		});
 		
 		// Prints the colors
-		names.forEach(function(style)
+		names.forEach(style =>
 		{
 			if(style.indexOf(prefix) === 0)
 			{
@@ -247,13 +244,13 @@ class EasyFTLogger
 					return;
 				}
 				styleStr = styleStr.replace(/^(light|dark)?(grey|magenta)/,
-						function(all, type, color)
+						(all, type, color) =>
 						{
 							var c2  = color == "grey" ? "gray" : "pink";
 							type = type || "";
 							return type + color + " | " + type + c2;
 						});
-						self.log("%{" + style + "}%s%{0}%s%s",
+						this.log("%{" + style + "}%s%{0}%s%s",
 							styleStr,
 							" ".repeat(slen - styleStr.length),
 							styles[style]);
@@ -300,7 +297,7 @@ class EasyFTLogger
 						else
 						{
 							var result,conv;
-							conv = this.#converters.find(function(conv)
+							conv = this.#converters.find(conv =>
 							{
 								conv.regExp.lastIndex = 0;
 								result = conv.regExp.exec(code);
