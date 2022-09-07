@@ -24,6 +24,17 @@ class Converter
 
 // ------> Converter - PUBLIC Methods
 
+	test(code)
+	{
+		return this.parse(code) ? true : false;
+	}
+
+	parse(code)
+	{
+		this.regExp.lastIndex = 0;
+		return this.regExp.exec(code);
+	}
+
 	toString()
 	{
 		return 	"[EasyFTLogger.Converter] " + this.name +
