@@ -121,10 +121,10 @@ class EasyFTLogger
 					"EasyFTLogger #" +
 					(EasyFTLogger.loggers.length+1);
 		
-		this.specials = Object.assign({}, EasyFTLogger.specials);
-		this.styles = Object.assign({}, EasyFTLogger.styles);
+		this.specials = {...EasyFTLogger.specials};
+		this.styles = {...EasyFTLogger.styles};
 
-		this.#converters = EasyFTLogger.#dftConverters.slice();
+		this.#converters = [...EasyFTLogger.#dftConverters];
 
 		EasyFTLogger.loggers.push(this);
 	}
