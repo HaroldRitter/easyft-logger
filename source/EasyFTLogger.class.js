@@ -204,12 +204,6 @@ Object.assign(EasyFTLogger.prototype,
 						"': must be letters followed by one or more ciffers.");
 		}
 
-		// Checks if the style exists
-		if(styles[name] !== undefined)
-		{
-			throw new Error("The '" + name + "' style already exists.");
-		}
-
 		// Creates the color and the background color
 		[["", false], ["c:", false], ["bg:", true]].forEach(function(data)
 		{
