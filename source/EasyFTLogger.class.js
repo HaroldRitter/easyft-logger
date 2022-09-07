@@ -163,7 +163,7 @@ class EasyFTLogger
 			return this;
 		}
 
-		var styles = this.styles;
+		const styles = this.styles;
 
 		// Checks the arguments
 		if(normal === undefined || normal === null)
@@ -190,7 +190,7 @@ class EasyFTLogger
 		// Creates the color and the background color
 		[["", false], ["c:", false], ["bg:", true]].forEach(data =>
 		{
-			var s = data[0], bg = data[1];
+			const s = data[0], bg = data[1];
 			if(light !== undefined && light !== null)
 			{
 				styles[s + "light" + name] = EasyFTLogger.ansiCode(light, bg);
@@ -216,16 +216,17 @@ class EasyFTLogger
 	*/
 	printColors(bg)
 	{
-		var slen = 26, prefix = bg ? "bg:" : "c:",
-			id = prefix.length, styles = this.styles,
-			names = Object.getOwnPropertyNames(styles);
-			
+		const prefix = bg ? "bg:" : "c:";
+		const id = prefix.length, styles = this.styles;
+		const names = Object.getOwnPropertyNames(styles);
+		
 		// Fixes the max length
+		var slen = 26;
 		names.forEach(style =>
 		{
 			if(style.indexOf(prefix) === 0)
 			{
-				var l = style.length - id + 2;
+				const l = style.length - id + 2;
 				if(l > slen)
 				{
 					slen = l;
@@ -246,7 +247,7 @@ class EasyFTLogger
 				styleStr = styleStr.replace(/^(light|dark)?(grey|magenta)/,
 						(all, type, color) =>
 						{
-							var c2  = color == "grey" ? "gray" : "pink";
+							const c2  = color == "grey" ? "gray" : "pink";
 							type = type || "";
 							return type + color + " | " + type + c2;
 						});
@@ -262,10 +263,10 @@ class EasyFTLogger
 
 	preformat()
 	{
-		var str = arguments[0] || "", output = "",
-			args = Array.prototype.slice.call(arguments, 1);
+		const str = arguments[0] || "";
+		const args = Array.prototype.slice.call(arguments, 1);
 		
-		output = str.replace(/%\{(.*?)\}/g,
+		var output = str.replace(/%\{(.*?)\}/g,
 				(all, code) =>
 				{
 					// In order: special, style name, converters
@@ -274,7 +275,7 @@ class EasyFTLogger
 					code = code.toLowerCase();
 					
 					// Special
-					var spec = this.specials[code];
+					const spec = this.specials[code];
 					if(spec !== undefined)
 					{
 						return spec;
@@ -288,7 +289,7 @@ class EasyFTLogger
 						code = code === "" ? "0" : code;
 
 						// Style name
-						var style = this.styles[code];
+						const style = this.styles[code];
 						if(style)
 						{
 							out += (out ? ";" : "") + style;
@@ -296,8 +297,8 @@ class EasyFTLogger
 						// Converters
 						else
 						{
-							var result,conv;
-							conv = this.#converters.find(conv =>
+							var result;
+							const conv = this.#converters.find(conv =>
 							{
 								conv.regExp.lastIndex = 0;
 								result = conv.regExp.exec(code);
@@ -360,7 +361,7 @@ class EasyFTLogger
 
 	static #addConverter(list, name, regExp, convert)
 	{
-		var conv = name instanceof EasyFTLogger.Converter ?
+		const conv = name instanceof EasyFTLogger.Converter ?
 						name : new EasyFTLogger.Converter(name, regExp, convert);
 		
 		list.push(conv);
