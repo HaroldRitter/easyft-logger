@@ -367,39 +367,41 @@ class EasyFTLogger
 		return conv;
 	}
 
+// ----> The log functions
+
+	// A substitute to the console.log function with the same arguments
+	log = 	logUtil.logFunction("log");
+
+	// [Deprecated] A substitute to the console.log function
+	// with all arguments in a single array
+	$log = 	logUtil.$logFunction("log");
+	
+	// A substitute to the console.info function with the same arguments
+	info = 	logUtil.logFunction("info");
+
+	// [Deprecated] A substitute to the console.info function
+	// with all arguments in a single array
+	$info = logUtil.$logFunction("info");
+	
+	// A substitute to the console.warn function with the same arguments
+	warn = 	logUtil.logFunction("warn");
+
+	// [Deprecated] A substitute to the console.warn function
+	// with all arguments in a single array
+	$warn = logUtil.$logFunction("warn");
+	
+	// A substitute to the console.error function with the same arguments
+	error = logUtil.logFunction("error");
+
+	// [Deprecated] A substitute to the console.error function
+	// with all arguments in a single array
+	$error = logUtil.$logFunction("error");
+
 // ------> EasyFTLogger - PRIVATE Properties
 	
 	#converters = [];
 }
 
-// ----> The log functions
-
-Object.assign(EasyFTLogger.prototype,
-{
-	// A substitute to the console.log function with the same arguments
-	log: 	logUtil.logFunction("log"),
-	// [Deprecated] A substitute to the console.log function
-	// with all arguments in a single array
-	$log: 	logUtil.$logFunction("log"),
-	
-	// A substitute to the console.info function with the same arguments
-	info: 	logUtil.logFunction("info"),
-	// [Deprecated] A substitute to the console.info function
-	// with all arguments in a single array
-	$info: 	logUtil.$logFunction("info"),
-	
-	// A substitute to the console.warn function with the same arguments
-	warn: 	logUtil.logFunction("warn"),
-	// [Deprecated] A substitute to the console.warn function
-	// with all arguments in a single array
-	$warn: 	logUtil.$logFunction("warn"),
-	
-	// A substitute to the console.error function with the same arguments
-	error: 	logUtil.logFunction("error"),
-	// [Deprecated] A substitute to the console.error function
-	// with all arguments in a single array
-	$error: logUtil.$logFunction("error"),
-});
 
 // ------------ (\_) EXPORTS THE MODULE (_/) ------------ //
 
