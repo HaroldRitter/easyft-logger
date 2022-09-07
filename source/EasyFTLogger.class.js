@@ -4,42 +4,10 @@ const logUtil = require("./utils/log.func.js");
 
 // ------- PUBLIC Class EasyFTLogger ------- //
 
-var EasyFTLogger = function(name)
+class EasyFTLogger
 {
-	this.name = name || "EasyFTLogger #" + (EasyFTLogger.loggers.length+1);
-	
-	this.specials = Object.assign({}, EasyFTLogger.specials);
-	this.styles = Object.assign({}, EasyFTLogger.styles);
+// ------> EasyFTLogger - PUBLIC Static Methods
 
-	Object.defineProperty(this, "_converters", 
-						{value: EasyFTLogger._converters.slice()});
-
-	EasyFTLogger.loggers.push(this);
-};
-
-// ------- EasyFTLogger - PUBLIC Static Properties ------- //
-
-Object.assign(EasyFTLogger,
-{
-	// The list of all loggers
-	loggers: [],
-
-	// Special characters
-	// The names of the special chars must use lower cases
-	specials:
-	{
-	},
-
-	// The ANSI escape code styles
-	styles:
-	{
-	}
-});
-
-// ------- EasyFTLogger - PUBLIC Static Methods ------- //
-
-Object.assign(EasyFTLogger,
-{
 	/*
 		Gets the ANSI color code from the given color.
 
@@ -51,14 +19,14 @@ Object.assign(EasyFTLogger,
 			returns String
 				The ANSI color code
 	*/
-	ansiCode: function(color, isBg)
+	static ansiCode(color, isBg)
 	{
 		if(typeof(color) == "object")
 		{
 			return (isBg ? "48" : "38") + ";2;" + color.join(";");
 		}
 		return (isBg ? "48" : "38") + ";5;" + color;
-	},
+	}
 
 	/*
 		See EasyFTLogger.prototype.addColor
@@ -68,7 +36,7 @@ Object.assign(EasyFTLogger,
 
 		It returns the EasyFTLogger class.
 	*/
-	addColor: function(name, light, normal, dark)
+	static addColor(name, light, normal, dark)
 	{
 		// Adds the color to the class
 		EasyFTLogger.prototype.addColor.call(EasyFTLogger,
@@ -82,7 +50,7 @@ Object.assign(EasyFTLogger,
 		});
 		
 		return EasyFTLogger;
-	},
+	}
 	
 	/*
 		See EasyFTLogger.prototype.printColors
@@ -91,11 +59,11 @@ Object.assign(EasyFTLogger,
 
 		It returns the EasyFTLogger class.
 	*/
-	printColors: function(bg)
+	static printColors(bg)
 	{
 		EasyFTLogger.orphanLogger().printColors(bg);
 		return EasyFTLogger;
-	},
+	}
 
 	/*
 		See EasyFTLogger.prototype.addConverter
@@ -105,11 +73,11 @@ Object.assign(EasyFTLogger,
 
 		It returns the EasyFTLogger class.
 	*/
-	addConverter: function(name, regExp, convert)
+	static addConverter(name, regExp, convert)
 	{
 		// Adds the converter to the class
-		EasyFTLogger.prototype.addConverter.call(EasyFTLogger,
-											name, regExp, convert);
+		EasyFTLogger.#addConverter(EasyFTLogger.#dftConverters,
+									name, regExp, convert);
 		
 		// Adds the converter to all existing instances
 		EasyFTLogger.loggers.forEach(function(logger)
@@ -119,7 +87,7 @@ Object.assign(EasyFTLogger,
 		});
 
 		return EasyFTLogger;
-	},
+	}
 
 	/*
 		Creates an EasyFTLogger and removes it from
@@ -127,25 +95,42 @@ Object.assign(EasyFTLogger,
 
 		returns EasyFTLogger
 	*/
-	orphanLogger: function()
+	static orphanLogger()
 	{
 		new EasyFTLogger();
 		return EasyFTLogger.loggers.pop();
 	}
-});
 
-// ------- EasyFTLogger - PRIVATE Static Properties ------- //
+// ------> EasyFTLogger - PUBLIC Static Properties
 
-Object.defineProperties(EasyFTLogger,
-{
-	// The list of all converters
-	_converters: {value: []}
-});
+	// The list of all loggers
+	static loggers = [];
+	
+	// Special characters
+	// The names of the special chars must use lower cases
+	static specials = {};
 
-// ------- EasyFTLogger - PUBLIC Instance Methods ------- //
+	// The ANSI escape code styles
+	static styles = {};
 
-Object.assign(EasyFTLogger.prototype,
-{
+// ------> EasyFTLogger - Constructor
+
+	constructor(name)
+	{
+		this.name = name ||
+					"EasyFTLogger #" +
+					(EasyFTLogger.loggers.length+1);
+		
+		this.specials = Object.assign({}, EasyFTLogger.specials);
+		this.styles = Object.assign({}, EasyFTLogger.styles);
+
+		this.#converters = EasyFTLogger.#dftConverters.slice();
+
+		EasyFTLogger.loggers.push(this);
+	}
+
+// ------> EasyFTLogger - PUBLIC Methods
+	
 	/*
 		Adds a color to the EasyFTLogger instance styles.
 		The method will add the text (without prefix and with the "c:" prefix)
@@ -166,7 +151,7 @@ Object.assign(EasyFTLogger.prototype,
 			returns Function
 				The EasyFTLogger class
 	*/
-	addColor: function(name, light, normal, dark)
+	addColor(name, light, normal, dark)
 	{
 		var self = this;
 
@@ -220,7 +205,7 @@ Object.assign(EasyFTLogger.prototype,
 		});
 		
 		return this;
-	},
+	}
 
 	/*
 		Prints all the available colors.
@@ -231,7 +216,7 @@ Object.assign(EasyFTLogger.prototype,
 			returns EasyFTLogger
 				This instance
 	*/
-	printColors: function(bg)
+	printColors(bg)
 	{
 		var slen = 26, prefix = bg ? "bg:" : "c:",
 			id = prefix.length, styles = this.styles,
@@ -276,15 +261,15 @@ Object.assign(EasyFTLogger.prototype,
 		});
 
 		return this;
-	},
+	}
 
-	preformat: function()
+	preformat()
 	{
-		var str = arguments[0] || "", output = "", self = this,
+		var str = arguments[0] || "", output = "",
 			args = Array.prototype.slice.call(arguments, 1);
 		
 		output = str.replace(/%\{(.*?)\}/g,
-				function(all, code)
+				(all, code) =>
 				{
 					// In order: special, style name, converters
 
@@ -292,7 +277,7 @@ Object.assign(EasyFTLogger.prototype,
 					code = code.toLowerCase();
 					
 					// Special
-					var spec = self.specials[code];
+					var spec = this.specials[code];
 					if(spec !== undefined)
 					{
 						return spec;
@@ -301,12 +286,12 @@ Object.assign(EasyFTLogger.prototype,
 					// Styles
 					var out = "";
 					code = code.split(/\s*;\s*/g);
-					code.forEach(function(code)
+					code.forEach(code =>
 					{
 						code = code === "" ? "0" : code;
 
 						// Style name
-						var style = self.styles[code];
+						var style = this.styles[code];
 						if(style)
 						{
 							out += (out ? ";" : "") + style;
@@ -315,7 +300,7 @@ Object.assign(EasyFTLogger.prototype,
 						else
 						{
 							var result,conv;
-							conv = self._converters.find(function(conv)
+							conv = this.#converters.find(function(conv)
 							{
 								conv.regExp.lastIndex = 0;
 								result = conv.regExp.exec(code);
@@ -334,12 +319,12 @@ Object.assign(EasyFTLogger.prototype,
 		return {message: output,
 				arguments: args,
 				messageAndArguments: [output].concat(args)};
-	},
+	}
 
-	$preformat: function(args)
+	$preformat(args)
 	{
 		return this.preformat.apply(this, args);
-	},
+	}
 
 	// (name: string, regExp: RegExp, convert: Function(regRes, arg1, ...))
 	// OR (converter: EasyFTLogger.Converter)
@@ -364,18 +349,37 @@ Object.assign(EasyFTLogger.prototype,
 			returns EasyFTLogger
 				This instance
 	*/
-	addConverter: function(name, regExp, convert)
+	addConverter(name, regExp, convert)
+	{
+		return EasyFTLogger.#addConverter(this.#converters,
+										name, regExp, convert);
+	}
+
+// ------> EasyFTLogger - PRIVATE Static Properties
+
+	static #dftConverters = [];
+	
+// ------> EasyFTLogger - PRIVATE Static Methods
+
+	static #addConverter(list, name, regExp, convert)
 	{
 		var conv = name instanceof EasyFTLogger.Converter ?
 						name : new EasyFTLogger.Converter(name, regExp, convert);
 		
-		this._converters.push(conv);
+		list.push(conv);
+
+		return conv;
+	}
+
+// ------> EasyFTLogger - PRIVATE Properties
 	
-		return this;
-	},
+	#converters = [];
+}
 
 // ----> The log functions
 
+Object.assign(EasyFTLogger.prototype,
+{
 	// A substitute to the console.log function with the same arguments
 	log: 	logUtil.logFunction("log"),
 	// A substitute to the console.log function with all arguments in a single array
