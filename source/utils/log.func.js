@@ -16,6 +16,7 @@ module.exports =
 		};
 	},
 
+	// [Deprecated]
 	$logFunction: function(funcName)
 	{
 		return function(args)

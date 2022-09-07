@@ -317,6 +317,7 @@ class EasyFTLogger
 				messageAndArguments: [output].concat(args)};
 	}
 
+	// [Deprecated]
 	$preformat(args)
 	{
 		return this.preformat(...args);
