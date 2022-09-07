@@ -239,7 +239,7 @@ class EasyFTLogger
 		{
 			if(style.indexOf(prefix) === 0)
 			{
-				var styleStr = style.substr(id);
+				var styleStr = style.substring(id);
 				if(/^(light|dark)?(gray|pink)$/.test(styleStr))
 				{
 					return;
